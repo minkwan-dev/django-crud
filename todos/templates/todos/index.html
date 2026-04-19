@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Todo 목록{% endblock %}
+
+{% block content %}
+    <h1>Todo 목록</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">추가</button>
+    </form>
+    {% if todos %}
+        <ul>
+            {% for todo in todos %}
+            <li>
+                <a href="{% url 'detail' todo.pk %}">{{ todo.title }}</a>
+                {% if todo.completed %} — 완료{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>할 일이 없습니다. Admin에서 추가해 보세요.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ todo.title }}{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'index' %}">← 목록</a></p>
+    <h1>{{ todo.title }}</h1>
+    <p><a href="{% url 'edit' todo.pk %}">제목 수정</a></p>
+    <p>완료: {% if todo.completed %}예{% else %}아니오{% endif %}</p>
+    <p>만든 시각: {{ todo.created_at }}</p>
+    <form method="post" action="{% url 'delete' todo.pk %}">
+        {% csrf_token %}
+        <button type="submit">삭제</button>
+    </form>
+    <form method="post" action="{% url 'toggle' todo.pk %}">
+        {% csrf_token %}
+        <button type="submit">
+            {% if todo.completed %}완료 취소{% else %}완료로 표시{% endif %}
+        </button>
+    </form>
+{% endblock %}
